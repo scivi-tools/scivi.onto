@@ -18,13 +18,14 @@ class Onto:
         self.data = data
 
     @classmethod
-    def load_from_file(cls, filename):
+    def load_from_file(cls, filename, encoding="utf-8"):
         '''
         Create instance of Onto reading ontology form ONTOLIS file.
         @param filename - name of file.
+        @param encoding - encoding of ONTOLIS file, default utf-8
         '''
         data = None
-        with open(filename) as f:
+        with open(filename, encoding=encoding) as f:
             data = json.load(f)
         if not data:
             raise ValueError("corrupt ontology")
@@ -130,12 +131,13 @@ class Onto:
                 result.append(self.get_node_by_id(link["source_node_id"]))
         return result
 
-    def write_to_file(self, filename):
+    def write_to_file(self, filename, encoding="utf-8"):
         '''
         Write down ontology to the file.
         @param filename - name of file to write into.
+        @param encoding - encoding of ONTOLIS file, default utf-8
         '''
-        with open(filename, "w") as f:
+        with open(filename, "w", ecnoding=encoding) as f:
             json.dump(self.data, f, sort_keys = True, indent = 4, ensure_ascii = False)
 
     def first(self, array):
